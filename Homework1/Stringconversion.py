@@ -1,10 +1,13 @@
-num_list = [4,5,67,89,23,23,134,15,4,23,29,212,94,98]
-max_num = max(num_list)
-print("Max:",max_num)
-min_num = min(num_list)
-print("Min:", min_num)
-sum_of_nums = sum(num_list)
-print("Sum:", sum_of_nums)
-length = len(num_list)
-avr_sum = sum_of_nums/length
-print("Average sum:", avr_sum)
+sentence = "The SUn iS sHINinG brIghtLY tODAy!"
+alphabet_upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+alphabet_lower = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+sentence_upper = ""
+
+for letter in sentence:
+    if letter.islower():
+        letter_pos = alphabet_lower.index(letter)
+        sentence_upper += alphabet_upper[letter_pos]
+    else:
+        sentence_upper += letter
+
+print(sentence_upper)

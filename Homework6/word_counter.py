@@ -1,38 +1,60 @@
 from collections import Counter
 import os
 
-directory = "directory"
+def create_directory(directory):
+    if not os.path.exists(directory):
+        os.mkdir(directory)
 
-if not os.path.exists(directory):
-    os.mkdir(directory)
+def read_file(file_path):
+    with open(file_path, "r") as f:
+        return f.read()
 
-file_path = os.path.join(directory, "test_file.txt")
+def count_word_occurrences(file_content, word, case_sensitive=True):
+    if not case_sensitive:
+        file_content = file_content.lower()
+        word = word.lower()
+    word_count = Counter(file_content.split())
+    return word_count[word]
 
-with open(file_path, "w") as f:
-    f.write("File content: ")
+def word_counter():
+    directory = "directory"
+    create_directory(directory)
 
-with open(file_path, "a") as f:
-    f.write("TEST FILE")
+    file_path = os.path.join(directory, "test_file.txt")
 
-question = input("Do you want to check for a word (capital or non-capital) or for a specific word (specific/non-specific)?: ").lower()
+    with open(file_path, "w") as f:
+        f.write("File content: ")
 
-if question not in ['specific', 'non specific']:
-    print("You can only answer this question with specific/non-specific!")
-    question = input("Do you want to check for a word (capital or non-capital) or for a specific word (specific/non-specific)?: ").lower()
+    with open(file_path, "a") as f:
+        f.write("TEST FILE")
 
-with open(file_path, "r") as f:
-    file_content = f.read()
+    file_content = read_file(file_path)
 
-if question == "specific":
-    specific_word = input("Enter the word you want to be counted: ")
-    specific_word_count = Counter(file_content.split())
-    print(f"{specific_word} was found: {specific_word_count[specific_word]} times in the file")
+    while True:
+        question_type = input("Do you want to check for a specific word or a non-specific word?: ").lower()
 
-elif question == "non specific":
-    non_specific_word = input("Enter the word you want to be counted: ").lower()
-    non_specific_word_count = Counter(file_content.lower().split())
-    print(f"{non_specific_word} was found: {non_specific_word_count[non_specific_word]} times in the file")
+        while question_type not in ["specific", "non-specific"]:
+            print("You can only answer this question with specific or non-specific!")
+            question_type = input("Do you want to check for a specific word or a non-specific word?: ").lower()
 
+        case_sensitive = True
+        if question_type == "non-specific":
+            case_sensitive = False
+
+        word_input = input("Enter the word you want to be counted: ")
+        word_occurrences = count_word_occurrences(file_content, word_input, case_sensitive)
+        print(f"{word_input} was found: {word_occurrences} times in the file")
+
+        continue_check = input("Do you want to check for another word? (yes/no): ").lower()
+        while continue_check not in ["yes", "no"]:
+            print("You can only answer this question with yes or no")
+            continue_check = input("Do you want to check for another word? (yes/no): ").lower()
+
+        if continue_check == "no":
+            break
+
+
+word_counter()
 
 
 
